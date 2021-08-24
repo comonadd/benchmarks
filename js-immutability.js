@@ -45,6 +45,28 @@ const spreadTest = () => {
     }
 };
 
+class FastArray {
+  data = [];
+
+  constructor(initialData) {
+    if (initialData) {
+      this.data = initialData;
+    }
+  }
+
+  append = (item) => {
+    this.data.push(item);
+    return new FastArray(this.data);
+  };
+}
+
+const fastArrayTest = () => {
+    let arr = new FastArray([]);
+    for (let i = 0; i < N; ++i) {
+        const newItem = ITEM;
+        arr = arr.append(newItem);
+    }
+};
 
 const pushTest = () => {
     let arr = { data: [] };
@@ -75,6 +97,7 @@ const immerTest = () => {
 
 const timedSpread = timeit(spreadTest, "spread & add");
 const timedPush = timeit(pushTest, "saving the old array reference");
+const fastArray = timeit(fastArrayTest, "FastArray");
 const timedImm = timeit(immTest, "Immutable.js List");
 const timedImmer = timeit(immerTest, "Immer");
 timeDiff(timedSpread, timedPush);
