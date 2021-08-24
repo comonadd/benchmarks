@@ -1,8 +1,13 @@
 const { List } = require('immutable');
 const { produce } = require('immer');
+const process = require("process");
+
+const GEN_MODE = process.argv.indexOf("-g") !== -1;
 
 const N = Math.round(2 * Math.pow(10, 4));
-console.info(`N=${N}`);
+if (!GEN_MODE) {
+    console.info(`N=${N}`);
+}
 const ITEM = { a: 3 };
 
 const timeit = (f, what) => {
@@ -10,7 +15,12 @@ const timeit = (f, what) => {
     const result = f();
     const ended = new Date();
     const diff = ended - started;
-    console.info(`"${what}" took ${diff / 1000} seconds!`);
+    const s = diff / 1000;
+    if (GEN_MODE) {
+        console.info(`| ${what} | ${s} |`);
+    } else {
+        console.info(`"${what}" took ${s} seconds!`);
+    }
     return [what, result, diff];
 };
 
@@ -100,6 +110,8 @@ const timedPush = timeit(pushTest, "saving the old array reference");
 const fastArray = timeit(fastArrayTest, "FastArray");
 const timedImm = timeit(immTest, "Immutable.js List");
 const timedImmer = timeit(immerTest, "Immer");
-timeDiff(timedSpread, timedPush);
-timeDiff(timedSpread, timedImm);
-timeDiff(timedImm, timedImmer);
+if (!GEN_MODE) {
+    timeDiff(timedSpread, timedPush);
+    timeDiff(timedSpread, timedImm);
+    timeDiff(timedImm, timedImmer);
+}
