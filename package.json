@@ -2,11 +2,12 @@
   "name": "benchmarks",
   "version": "1.0.0",
   "description": "",
-  "main": "js-spread-vs-push-immutability.js",
+  "main": "",
   "scripts": {
+    "run-imm": "node ./js-immutability.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Dmitry Guzeev <dmitri.guzeev@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "immer": "^9.0.5",
